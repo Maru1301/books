@@ -14,23 +14,23 @@ Since assembly language uses human-readable symbols that translate into machine 
 ## 2-1 What Computer Can Do
 All computers boil down to the same basic instructions.
   So what is it that computers can do computationally? Computers can
-  • Do basic integer arithmetic
-  • Do memory access
-  • Compare values
-  • Change the order of instruction execution based on a previous comparison
+  - Do basic integer arithmetic
+  - Do memory access
+  - Compare values
+  - Change the order of instruction execution based on a previous comparison
 
 ## 2-3 Basic Computer Organization
 Computers consist of the following basic parts:
-  • The CPU (also referred to as the processor or microprocessor): 
+  - The CPU (also referred to as the processor or microprocessor): 
     1. CPU handles all computation and essentially coordinates all of the tasks that occur in a computer.
-  • Working memory:
+  - Working memory:
     1. usually referred to as RAM, which stands for “random access memory.”
     2. The working memory is usually wiped out when the computer gets turned off.
-  • Permanent storage:
+  - Permanent storage:
     1. is your hard drive(s), whether internal or external, plus USB sticks, or whatever else you store files on.
-  • Peripherals:
+  - Peripherals:
     1. Everything else connected to your computer gets classified as a peripheral.
-  • System bus:
+  - System bus:
     1. Buses handle communication between the various components of the computer,
        usually between the CPU and other peripherals and between the CPU and main memory.
 
@@ -54,7 +54,7 @@ You can think of memory as boxes, where each box is 1 byte big.
   Each memory box has an address, which tells the computer how to find it.
   Different size values have various names on the x86-64 platform. 
   These names come from the fact that the ancestor of the x86-64 was a 16-bit processor. Typical sizes include
-  • 1 byte (8 bits): Typically just referred to as a byte
-  • 2 bytes (16 bits): Known as a “word” or a “short”
-  • 4 bytes (32 bits): Known as a “double-word” or an “int”
-  • 8 bytes (64 bits): Known as a “quadword”4
+  - 1 byte (8 bits): Typically just referred to as a byte
+  - 2 bytes (16 bits): Known as a “word” or a “short”
+  - 4 bytes (32 bits): Known as a “double-word” or an “int”
+  - 8 bytes (64 bits): Known as a “quadword”4
