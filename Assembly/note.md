@@ -64,8 +64,34 @@ For the memory, it is all stored a byte at a time. However, if you were to acces
 
 ## 2-7 The Structure of the CPU
 The common conceptual parts of a CPU are
-- Registers
+- Registers  
+    1. Tiny blocks of memory inside the processor itself. . These are bits of data that the processor can access directly without waiting.
+    2. Some registers also have special purposes, such as pointing to the next instruction to be carried out, holding some sort of processor status, or being able to be used for some special processor function.
 - Control unit
-- Arithmetic and logic unit
+    1. sets the pacing for the chip. It handles the coordination of all the different parts of the chip.
+- Arithmetic and logic unit (ALU)
+    1. It does the additions, subtractions, comparisons, etc. The ALU is normally wired so that basic operations can be done with registers extremely quickly.
 - Memory management unit
+    1. it manages the way that the processor sees and understands memory addresses.
 - Caches
+    1. A piece of memory that holds other memory closer to the CPU
+    2. CPUs implement all sorts of caches, each of which cache different things for different reasons, and even have different access speeds.
+
+## 2-8 The Fetch-Execute Cycle
+The way that the processor runs programs is through the **fetch-execute cycle**.  
+The computer essentially runs an endless cycle of the following operations:
+1. Read the instruction from the memory address specified by the **instruction pointer(IP)**.
+2. Decode the instruction (i.e., figure out what the instruction means).
+3. Advance the instruction pointer to the next instruction.
+4. Perform the operation indicated by the instruction.
+Each instruction is extremely limited in its operation. Available instructions do operations like the following:
+- Load a value from memory into a register.
+- Store a value from a register into memory.
+- Do a single arithmetic operation.
+- Compare two values.
+- Go to a different location in the code (i.e., modify the instruction pointer) based on the result of a previous comparison.
+
+## 2-9 Adding CPU Cores
+A CPU core is like a CPU, but more than one of them may exist on a single chip, and while each core is largely independent of the other cores on the same chip, the cores may share a certain amount of circuitry, such as caches.<br>
+If one core had a piece of memory stored in one of its caches and another core modified that same data. Getting that change communicated to the other cores can be a challenging prospect for hardware engineers. This is known as the cache coherence problem.<br>
+It is usually solved by having the CPUs and caches implement what is known as the MESI protocol, which basically allows caches to tell other caches they need to update their values.
