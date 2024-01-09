@@ -26,7 +26,7 @@ static int simpleInstruction(const char* name, int offset) {
 
 int disassembleInstruction(Chunk* chunk, int offset) {
     printf("%04d ", offset);
-    if(offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1]) {
+    if (offset > 0 && chunk->lines[offset] == chunk->lines[offset - 1]) {
         printf("   | ");
     } else {
         printf("%4d ", chunk->lines[offset]);
@@ -49,7 +49,7 @@ int disassembleInstruction(Chunk* chunk, int offset) {
         case OP_RETURN:
             return simpleInstruction("OP_RETURN", offset);
         default:
-            printf("Unknown opcode %d\n", instruction);
+            printf("UNKNOWN opcode %d\n", instruction);
             return offset + 1;
     }
 }
