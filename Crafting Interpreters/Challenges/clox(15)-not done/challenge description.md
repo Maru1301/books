@@ -1,24 +1,28 @@
-1. Our encoding of line information is hilariously wasteful of memory. Given that a series of instructions often correspond to the same source line, a natural solution is something akin to [https://en.wikipedia.org/wiki/Run-length_encoding]run-length encoding of the line numbers.
-
-Devise an encoding that compresses the line information for a series of instructions on the same line. Change writeChunk() to write this compressed form, and implement a getLine() function that, given the index of an instruction, determines the line where the instruction occurs.
-
-Hint: It’s not necessary for getLine() to be particularly efficient. Since it is called only when a runtime error occurs, it is well off the critical path where performance matters.
-
-2. Because OP_CONSTANT uses only a single byte for its operand, a chunk may only contain up to 256 different constants. That’s small enough that people writing real-world code will hit that limit. We could use two or more bytes to store the operand, but that makes every constant instruction take up more space. Most chunks won’t need that many unique constants, so that wastes space and sacrifices some locality in the common case to support the rare case.
-
-To balance those two competing aims, many instruction sets feature multiple instructions that perform the same operation but with operands of different sizes. Leave our existing one-byte OP_CONSTANT instruction alone, and define a second OP_CONSTANT_LONG instruction. It stores the operand as a 24-bit number, which should be plenty.
-
-Implement this function:
+1. What bytecode instruction sequences would you generate for the following expressions:
 
 ```
-void writeConstant(Chunk* chunk, Value value, int line) {
-  // Implement me...
-}
+1 * 2 + 3
+1 + 2 * 3
+3 - 2 - 1
+1 + 2 * 3 - 4 / -5
 ```
-It adds value to chunk’s constant array and then writes an appropriate instruction to load the constant. Also add support to the disassembler for OP_CONSTANT_LONG instructions.
 
-Defining two instructions seems to be the best of both worlds. What sacrifices, if any, does it force on us?
+(Remember that Lox does not have a syntax for negative number literals, so the -5 is negating the number 5.)
 
-3. Our reallocate() function relies on the C standard library for dynamic memory allocation and freeing. malloc() and free() aren’t magic. Find a couple of open source implementations of them and explain how they work. How do they keep track of which bytes are allocated and which are free? What is required to allocate a block of memory? Free it? How do they make that efficient? What do they do about fragmentation?
+2. If we really wanted a minimal instruction set, we could eliminate either OP_NEGATE or OP_SUBTRACT. Show the bytecode instruction sequence you would generate for:
 
-Hardcore mode: Implement reallocate() without calling realloc(), malloc(), or free(). You are allowed to call malloc() once, at the beginning of the interpreter’s execution, to allocate a single big block of memory, which your reallocate() function has access to. It parcels out blobs of memory from that single region, your own personal heap. It’s your job to define how it does that.
+```
+4 - 3 * -2
+```
+
+First, without using OP_NEGATE. Then, without using OP_SUBTRACT.
+
+Given the above, do you think it makes sense to have both instructions? Why or why not? Are there any other redundant instructions you would consider including?
+
+3. Our VM’s stack has a fixed size, and we don’t check if pushing a value overflows it. This means the wrong series of instructions could cause our interpreter to crash or go into undefined behavior. Avoid that by dynamically growing the stack as needed.
+
+What are the costs and benefits of doing so?
+
+4. To interpret OP_NEGATE, we pop the operand, negate the value, and then push the result. That’s a simple implementation, but it increments and decrements stackTop unnecessarily, since the stack ends up the same height in the end. It might be faster to simply negate the value in place on the stack and leave stackTop alone. Try that and see if you can measure a performance difference.
+
+Are there other instructions where you can do a similar optimization?
