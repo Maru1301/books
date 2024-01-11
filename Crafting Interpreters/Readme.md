@@ -1,2 +1,2 @@
 https://craftinginterpreters.com/contents.html
-bookmark 14.6
+bookmark 15.2.2
