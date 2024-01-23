@@ -1,28 +1,42 @@
-1. What bytecode instruction sequences would you generate for the following expressions:
+1. Many newer languages support *string interpolation*. Inside a string literal, you have some sort of special delimiters—most commonly ${ at the beginning and } at the end. Between those delimiters, any expression can appear. When the string literal is executed, the inner expression is evaluated, converted to a string, and then merged with the surrounding string literal.
+
+For example, if Lox supported string interpolation, then this . . . 
 
 ```
-1 * 2 + 3
-1 + 2 * 3
-3 - 2 - 1
-1 + 2 * 3 - 4 / -5
+var drink = "Tea";
+var steep = 4;
+var cool = 2;
+print "${drink} will be ready in ${steep + cool} minutes.";
 ```
 
-(Remember that Lox does not have a syntax for negative number literals, so the -5 is negating the number 5.)
-
-2. If we really wanted a minimal instruction set, we could eliminate either OP_NEGATE or OP_SUBTRACT. Show the bytecode instruction sequence you would generate for:
+ . . . would print:
 
 ```
-4 - 3 * -2
+Tea will be ready in 6 minutes.
 ```
 
-First, without using OP_NEGATE. Then, without using OP_SUBTRACT.
+What token types would you define to implement a scanner for string interpolation? What sequence of tokens would you emit for the above string literal?
 
-Given the above, do you think it makes sense to have both instructions? Why or why not? Are there any other redundant instructions you would consider including?
+What tokens would you emit for:
 
-3. Our VM’s stack has a fixed size, and we don’t check if pushing a value overflows it. This means the wrong series of instructions could cause our interpreter to crash or go into undefined behavior. Avoid that by dynamically growing the stack as needed.
+```
+"Nested ${"interpolation?! Are you ${"mad?!"}"}"
+```
 
-What are the costs and benefits of doing so?
+Consider looking at other language implementations that support interpolation to see how they handle it.
 
-4. To interpret OP_NEGATE, we pop the operand, negate the value, and then push the result. That’s a simple implementation, but it increments and decrements stackTop unnecessarily, since the stack ends up the same height in the end. It might be faster to simply negate the value in place on the stack and leave stackTop alone. Try that and see if you can measure a performance difference.
+2. Several languages use angle brackets for generics and also have a >> right shift operator. This led to a classic problem in early versions of C++:
 
-Are there other instructions where you can do a similar optimization?
+```
+vector<vector<string>> nestedVectors;
+```
+
+This would produce a compile error because the >> was lexed to a single right shift token, not two > tokens. Users were forced to avoid this by putting a space between the closing angle brackets.
+
+Later versions of C++ are smarter and can handle the above code. Java and C# never had the problem. How do those languages specify and implement this?
+
+3. Many languages, especially later in their evolution, define “contextual keywords”. These are identifiers that act like reserved words in some contexts but can be normal user-defined identifiers in others.
+
+For example, await is a keyword inside an async method in C#, but in other methods, you can use await as your own identifier.
+
+Name a few contextual keywords from other languages, and the context where they are meaningful. What are the pros and cons of having contextual keywords? How would you implement them in your language’s front end if you needed to?
