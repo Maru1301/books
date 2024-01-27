@@ -49,7 +49,7 @@ static void advance() {
 
     for (;;) {
         parser.current = scanToken();
-        if (parser.current.Type != TOKEN_ERROR) break;
+        if (parser.current.type != TOKEN_ERROR) break;
 
         errorAtCurrent(parser.current.start);
     }
@@ -77,7 +77,7 @@ static void emitReturn() {
     emitByte(OP_RETURN);
 }
 
-static uint8_t makeConstant(Value vlaue) {
+static uint8_t makeConstant(Value value) {
     int constant = addConstant(currentChunk(), value);
     if (constant > UINT8_MAX) {
         error("Too many constants in one chunk.");

@@ -50,9 +50,9 @@ static char* readFile(const char* path) {
      return buffer;
 }
 
-static void runFile(const hcar* path) {
+static void runFile(const char* path) {
     char* source = readFile(path);
-    Interpretresult result = interpret(source);
+    InterpretResult result = interpret(source);
     free(source);
 
     if (result == INTERPRET_COMPILE_ERROR) exit(65);

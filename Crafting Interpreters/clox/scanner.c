@@ -27,7 +27,7 @@ static bool isDigit(char c) {
 } 
 
 static bool isAtEnd() {
-    retrun *scanner.current == '\0';
+    return *scanner.current == '\0';
 }
 
 static char advance() {
@@ -136,7 +136,7 @@ static TokenType identifierType() {
     return TOKEN_IDENTIFIER;
 }
 
-static Token identifire() {
+static Token identifier() {
     while (isAlpha(peek()) || isDigit(peek())) advance();
     return makeToken(identifierType());
 }
@@ -192,7 +192,7 @@ Token scanToken() {
         case '*': return makeToken(TOKEN_STAR);
         case '!': 
             return makeToken(
-                match('=') ? TOKEN_BAND_EQUAL : TOKEN_BAND);
+                match('=') ? TOKEN_BANG_EQUAL : TOKEN_BANG);
         case '=': 
             return makeToken(
                 match('=') ? TOKEN_EQUAL_EQUAL : TOKEN_EQUAL);
