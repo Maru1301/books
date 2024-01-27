@@ -18,7 +18,7 @@ void initScanner(const char* source) {
     scanner.line = 1;
 }
 
-static bool isAlpah(char c) {
+static bool isAlpha(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 }
 
@@ -172,7 +172,7 @@ Token scanToken() {
     skipWhitespace();
     scanner.start = scanner.current;
 
-    if (isAtEed()) return makeToken(TOKEN_EOF);
+    if (isAtEnd()) return makeToken(TOKEN_EOF);
 
     char c = advance();
     if (isAlpha(c)) return identifier();

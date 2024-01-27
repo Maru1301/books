@@ -15,7 +15,7 @@ void initVM() {
     resetStack();
 }
 
-void freeVm() {
+void freeVM() {
 
 }
 

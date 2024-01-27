@@ -3,6 +3,7 @@
 
 #include "common.h"
 #include "compiler.h"
+#include "chunk.h"
 #include "scanner.h"
 
 typedef struct {
@@ -108,7 +109,7 @@ bool compile(const char* source, Chunk* chunk) {
     parser.panicMode = false;
 
     advance();
-    expression();
+    //expression();
     consume(TOKEN_EOF, "Expect end of expression.");
     endCompiler();
     return !parser.hadError;
