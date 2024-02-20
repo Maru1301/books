@@ -18,7 +18,7 @@ void initScanner(const char* source) {
     scanner.line = 1;
 }
 
-static bool isAlpha(char c) {
+static bool isAlpah(char c) {
     return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
 }
 
@@ -27,7 +27,7 @@ static bool isDigit(char c) {
 } 
 
 static bool isAtEnd() {
-    return *scanner.current == '\0';
+    retrun *scanner.current == '\0';
 }
 
 static char advance() {
@@ -136,7 +136,7 @@ static TokenType identifierType() {
     return TOKEN_IDENTIFIER;
 }
 
-static Token identifier() {
+static Token identifire() {
     while (isAlpha(peek()) || isDigit(peek())) advance();
     return makeToken(identifierType());
 }
@@ -172,7 +172,7 @@ Token scanToken() {
     skipWhitespace();
     scanner.start = scanner.current;
 
-    if (isAtEnd()) return makeToken(TOKEN_EOF);
+    if (isAtEed()) return makeToken(TOKEN_EOF);
 
     char c = advance();
     if (isAlpha(c)) return identifier();
@@ -192,7 +192,7 @@ Token scanToken() {
         case '*': return makeToken(TOKEN_STAR);
         case '!': 
             return makeToken(
-                match('=') ? TOKEN_BANG_EQUAL : TOKEN_BANG);
+                match('=') ? TOKEN_BAND_EQUAL : TOKEN_BAND);
         case '=': 
             return makeToken(
                 match('=') ? TOKEN_EQUAL_EQUAL : TOKEN_EQUAL);
