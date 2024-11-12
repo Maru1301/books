@@ -19,7 +19,9 @@ void initScanner(const char* source) {
 }
 
 static bool isAlpha(char c) {
-    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || c == '_';
+    return (c >= 'a' && c <= 'z') ||
+           (c >= 'A' && c <= 'Z') ||
+           c == '_';
 }
 
 static bool isDigit(char c) {
@@ -147,7 +149,7 @@ static Token number() {
     // Look for a fractional part.
     if (peek() == '.' && isDigit(peekNext())) {
         // Consume the ".".
-        advance;
+        advance();
 
         while (isDigit(peek())) advance();
     }
